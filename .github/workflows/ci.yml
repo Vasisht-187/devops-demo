@@ -1,0 +1,48 @@
+# This file defines our CI/CD pipeline.
+# GitHub reads this automatically — no installation needed.
+
+name: DevOps Demo CI Pipeline
+
+# TRIGGER: Run this pipeline when code is pushed
+# to main or develop, OR when a Pull Request is opened.
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+
+  # ── JOB 1: Build and Test ─────────────────────────────
+  build-and-test:
+    name: Build and Run Tests
+    runs-on: ubuntu-latest   # GitHub provides a free Linux VM
+
+    steps:
+
+      # Step A: Download your code onto the VM
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      # Step B: Install Python
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      # Step C: Install your app's dependencies
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # Step D: Run all pytest tests — if ANY test fails,
+      # the pipeline stops and marks the commit as FAILED.
+      - name: Run unit tests
+        run: pytest tests/ -v
+
+      # Step E: Build the Docker image to ensure it compiles
+      - name: Build Docker image
+        run: docker build -t devops-demo:latest .
+
+      # Step F: Report success
+      - name: Pipeline complete
+        run: echo "✅ All checks passed. Build is stable."
