@@ -40,4 +40,5 @@ def add(a, b):
     return a + b
 
 if __name__ == '__main__':
+    print("Starting DevOps Demo App on http://localhost:5000")
     app.run(host='0.0.0.0', port=5000, debug=True)
