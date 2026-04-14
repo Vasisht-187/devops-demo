@@ -39,6 +39,10 @@ jobs:
       - name: Run unit tests
         run: pytest tests/ -v
 
-      # Step E: Report success
+      # Step E: Build the Docker image to ensure it compiles
+      - name: Build Docker image
+        run: docker build -t devops-demo:latest .
+
+      # Step F: Report success
       - name: Pipeline complete
         run: echo "✅ All checks passed. Build is stable."
