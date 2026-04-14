@@ -26,6 +26,15 @@ def add_numbers(a, b):
 def version():
     return jsonify({'version': '1.0.0', 'build': 'stable'}), 200
 
+# ── Route 4: Multiply endpoint (new feature) ──────────
+@app.route('/multiply/<int:a>/<int:b>')
+def multiply_numbers(a, b):
+    result = multiply(a, b)
+    return jsonify({'a': a, 'b': b, 'result': result}), 200
+
+def multiply(a, b):
+    return a * b
+
 # ── Helper function (used by the route above) ─────────
 def add(a, b):
     return a + b
