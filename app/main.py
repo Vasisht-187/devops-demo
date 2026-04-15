@@ -35,6 +35,15 @@ def multiply_numbers(a, b):
 def multiply(a, b):
     return a * b
 
+# ── Route 5: Additional route (for testing monitoring) ──
+@app.route('/subtract/<int:a>/<int:b>')
+def subtract_numbers(a, b):
+    result = subtract(a, b)
+    return jsonify({'a': a, 'b': b, 'result': result}), 200
+
+def subtract(a, b):
+    return a - b
+
 # ── Helper function (used by the route above) ─────────
 def add(a, b):
     return a + b
